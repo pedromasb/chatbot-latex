@@ -1,0 +1,59 @@
+# MANIFEST.in - Include additional files in the distribution package
+
+# Include the license and readme
+include LICENSE
+include README.md
+include CLAUDE.md
+
+# Include requirements files
+include requirements.txt
+include pyproject.toml
+
+# Include example notebooks
+recursive-include examples *.ipynb
+recursive-include examples *.py
+recursive-include examples *.md
+
+# Include test files (optional - usually not included in distributions)
+# recursive-include tests *.py
+
+# Include documentation files
+recursive-include docs *.md *.rst *.txt *.py
+recursive-include docs/_static *
+recursive-include docs/_templates *
+
+# Include any data files in the package
+recursive-include thesis_chat/data *.json *.txt *.csv
+
+# Include configuration files
+include .gitignore
+include .flake8
+
+# Exclude certain files and directories
+prune .git
+prune .github
+prune __pycache__
+prune *.pyc
+prune *.pyo
+prune .pytest_cache
+prune .mypy_cache
+prune .coverage
+prune htmlcov
+prune build
+prune dist
+prune *.egg-info
+
+# Exclude OS and IDE files
+global-exclude .DS_Store
+global-exclude .vscode
+global-exclude .idea
+global-exclude *.swp
+global-exclude *.swo
+global-exclude *~
+global-exclude .env
+global-exclude .env.*
+
+# Exclude backup files
+global-exclude *.bak
+global-exclude *.backup
+global-exclude *.orig

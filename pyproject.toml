@@ -1,0 +1,200 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "thesis-chat"
+dynamic = ["version"]
+description = "LaTeX Document Processing and Conversational AI for Academic Documents"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+    {name = "ThesisChat Development Team", email = "support@thesischat.com"},
+]
+maintainers = [
+    {name = "ThesisChat Development Team", email = "support@thesischat.com"},
+]
+keywords = [
+    "latex", "academic", "thesis", "ai", "nlp", "embeddings", 
+    "vector-search", "rag", "conversational-ai", "research"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Education",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Text Processing :: Markup :: LaTeX",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "sentence-transformers>=2.2.0",
+    "pinecone-client>=2.2.0",
+    "openai>=1.0.0",
+    "numpy>=1.21.0",
+    "pandas>=1.3.0",
+    "torch>=1.12.0",
+    "transformers>=4.21.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=22.0.0",
+    "flake8>=5.0.0",
+    "jupyter>=1.0.0",
+    "notebook>=6.4.0",
+    "sphinx>=4.0.0",
+    "sphinx-rtd-theme>=1.0.0",
+]
+api = [
+    "flask>=2.0.0",
+    "fastapi>=0.95.0",
+    "uvicorn>=0.20.0",
+]
+integration = [
+    "requests>=2.25.0",
+    "python-dotenv>=0.19.0",
+]
+analysis = [
+    "matplotlib>=3.5.0",
+    "seaborn>=0.11.0",
+    "plotly>=5.0.0",
+    "wordcloud>=1.8.0",
+]
+all = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=22.0.0",
+    "flake8>=5.0.0",
+    "jupyter>=1.0.0",
+    "notebook>=6.4.0",
+    "sphinx>=4.0.0",
+    "sphinx-rtd-theme>=1.0.0",
+    "flask>=2.0.0",
+    "fastapi>=0.95.0",
+    "uvicorn>=0.20.0",
+    "requests>=2.25.0",
+    "python-dotenv>=0.19.0",
+    "matplotlib>=3.5.0",
+    "seaborn>=0.11.0",
+    "plotly>=5.0.0",
+    "wordcloud>=1.8.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/your-org/thesis-chat"
+Documentation = "https://thesis-chat.readthedocs.io/"
+Repository = "https://github.com/your-org/thesis-chat.git"
+"Bug Reports" = "https://github.com/your-org/thesis-chat/issues"
+Discussions = "https://github.com/your-org/thesis-chat/discussions"
+
+[tool.setuptools]
+packages = ["thesis_chat", "thesis_chat.core", "thesis_chat.utils"]
+
+[tool.setuptools.dynamic]
+version = {attr = "thesis_chat.__version__"}
+
+[tool.setuptools.package-data]
+thesis_chat = ["data/*.json", "data/*.txt"]
+
+# Black configuration
+[tool.black]
+line-length = 100
+target-version = ['py38', 'py39', 'py310', 'py311']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+# Pytest configuration
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--verbose",
+    "--tb=short",
+    "--strict-markers",
+    "--strict-config",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+]
+filterwarnings = [
+    "ignore::UserWarning",
+    "ignore::DeprecationWarning",
+]
+
+# Coverage configuration
+[tool.coverage.run]
+source = ["thesis_chat"]
+omit = [
+    "*/tests/*",
+    "*/test_*",
+    "setup.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
+
+# MyPy configuration (if used)
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+check_untyped_defs = true
+disallow_untyped_decorators = false
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[[tool.mypy.overrides]]
+module = [
+    "sentence_transformers.*",
+    "pinecone.*",
+    "openai.*",
+    "transformers.*",
+    "torch.*",
+    "pandas.*",
+    "numpy.*",
+]
+ignore_missing_imports = true
